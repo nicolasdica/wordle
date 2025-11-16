@@ -1,6 +1,6 @@
-use std::io;
-use rand::Rng;
 use colored::Colorize;
+use rand::Rng;
+use std::io;
 use wordle::words_library;
 
 #[derive(Debug)]
@@ -36,42 +36,48 @@ fn main() {
 
         println!("Input your guess: ");
         let mut guess = String::new();
-        io::stdin().read_line(&mut guess).expect("Failed to read line");
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line");
         let guess_vec: Vec<char> = guess.trim().chars().collect();
 
         if guess_vec.len() != 5 {
             println!("Your word guess should be of five letters");
-            continue
+            continue;
         }
 
         if !words.contains(&guess.trim().to_string()) {
             println!("That word is not in the word list!");
-            continue
+            continue;
         }
 
         if guess_vec == word_vec {
             println!("That's it!");
-            break
+            break;
         } else {
             for (index, letter) in guess_vec.iter().enumerate() {
                 if guess_vec[index] == word_vec[index] {
                     print!(" {} ", guess_vec[index].to_string().blue());
-                    
-                    if let Some(word_type) = wordle_vec.iter_mut().find(|item| item.letter == *letter) {
+
+                    if let Some(word_type) =
+                        wordle_vec.iter_mut().find(|item| item.letter == *letter)
+                    {
                         word_type.count += 1;
                     }
                 } else {
                     if word_vec.contains(&guess_vec[index]) {
-                        if let Some(word_type) = wordle_vec.iter().find(|item| item.letter == guess_vec[index]) {
+                        if let Some(word_type) = wordle_vec
+                            .iter()
+                            .find(|item| item.letter == guess_vec[index])
+                        {
                             if word_type.amount > word_type.count {
-                                print!(" {} ", guess_vec[index].to_string().red());    
+                                print!(" {} ", guess_vec[index].to_string().red());
                             } else {
-                                print!(" {}", guess_vec[index]);        
+                                print!(" {}", guess_vec[index]);
                             }
                         } else {
                             print!(" {} ", guess_vec[index].to_string().red());
                         }
-                        
                     } else {
                         print!(" {}", guess_vec[index]);
                     }
