@@ -10,3 +10,14 @@ pub fn words_library() -> Vec<String> {
 
     words
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn check_words_amount() {
+        let words = words_library();
+        assert!(words.len() > 1);
+    }
+}
