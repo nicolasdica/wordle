@@ -55,6 +55,11 @@ fn main() {
             continue
         }
 
+        if !words.contains(&guess.trim().to_string()) {
+            println!("That word is not in the word list!");
+            continue
+        }
+
         if guess_vec == word_vec {
             println!("That's it!");
             break
@@ -88,4 +93,3 @@ fn main() {
         }
     }
 }
-
