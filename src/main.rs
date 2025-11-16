@@ -1,24 +1,13 @@
 use std::io;
-use std::fs;
 use rand::Rng;
 use colored::Colorize;
+use wordle::words_library;
 
 #[derive(Debug)]
 struct WordsType {
     letter: char,
     amount: i8,
     count: i8,
-}
-
-fn words_library() -> Vec<String> {
-    let contents = fs::read_to_string("src/words.txt").expect("Failed to load words.txt");
-    let words: Vec<String> = contents
-        .lines()
-        .map(|line| line.trim().to_string())
-        .filter(|word| !word.is_empty())
-        .collect();
-
-    words
 }
 
 fn main() {
@@ -44,10 +33,10 @@ fn main() {
                 });
             }
         }
+
         println!("Input your guess: ");
         let mut guess = String::new();
         io::stdin().read_line(&mut guess).expect("Failed to read line");
-
         let guess_vec: Vec<char> = guess.trim().chars().collect();
 
         if guess_vec.len() != 5 {
