@@ -89,4 +89,25 @@ mod test {
         ];
         assert_eq!(wordle_vec, wordle_vec_expected);
     }
+
+    #[test]
+    fn validate_length_guess() {
+        let words = ["shine".to_string()];
+        let result = validate_guess("silicon", &words);
+
+        assert!(result.is_err());
+        assert_eq!(
+            result.unwrap_err(),
+            "Your word guess should be of five letters"
+        );
+    }
+
+    #[test]
+    fn validate_existing_guess() {
+        let words = ["shine".to_string()];
+        let result = validate_guess("level", &words);
+
+        assert!(result.is_err());
+        assert_eq!(result.unwrap_err(), "That word is not in the word list!");
+    }
 }
