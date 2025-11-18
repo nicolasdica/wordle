@@ -1,14 +1,7 @@
 use colored::Colorize;
 use rand::Rng;
 use std::io;
-use wordle::words_library;
-
-#[derive(Debug)]
-struct WordsType {
-    letter: char,
-    amount: i8,
-    count: i8,
-}
+use wordle::{build_letter_wordle_vec, words_library, validate_guess};
 
 fn main() {
     print!("\x1B[2J\x1B[1;1H");
@@ -21,18 +14,7 @@ fn main() {
     let word_vec: Vec<char> = word.chars().collect();
 
     loop {
-        let mut wordle_vec: Vec<WordsType> = Vec::new();
-        for letter in word_vec.iter() {
-            if let Some(word_type) = wordle_vec.iter_mut().find(|item| item.letter == *letter) {
-                word_type.amount += 1;
-            } else {
-                wordle_vec.push(WordsType {
-                    letter: *letter,
-                    amount: 1,
-                    count: 0,
-                });
-            }
-        }
+        let mut wordle_vec = build_letter_wordle_vec(&word);
 
         println!("Input your guess: ");
         let mut guess = String::new();
