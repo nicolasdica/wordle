@@ -37,6 +37,18 @@ pub fn build_letter_wordle_vec(word: &str) -> Vec<WordsType> {
     wordle_vec
 }
 
+pub fn validate_guess(guess: &str, words: &[String]) -> Result<(), String> {
+    if guess.len() != 5 {
+        return Err("Your word guess should be of five letters".to_string());
+    }
+
+    if !words.contains(&guess.trim().to_string()) {
+        return Err("That word is not in the word list!".to_string());
+    }
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

@@ -23,14 +23,12 @@ fn main() {
             .expect("Failed to read line");
         let guess_vec: Vec<char> = guess.trim().chars().collect();
 
-        if guess_vec.len() != 5 {
-            println!("Your word guess should be of five letters");
-            continue;
-        }
-
-        if !words.contains(&guess.trim().to_string()) {
-            println!("That word is not in the word list!");
-            continue;
+        match validate_guess(guess.trim(), &words) {
+            Ok(_) => {}
+            Err(error) => {
+                println!("{}", error);
+                continue;
+            }
         }
 
         if guess_vec == word_vec {
