@@ -65,11 +65,31 @@ mod test {
         assert_eq!(wordle_vec.len(), 5);
 
         let wordle_vec_expected = [
-            WordsType { letter: 's', amount: 1, count: 0 },
-            WordsType { letter: 'h', amount: 1, count: 0 },
-            WordsType { letter: 'i', amount: 1, count: 0 },
-            WordsType { letter: 'n', amount: 1, count: 0 },
-            WordsType { letter: 'e', amount: 1, count: 0 },
+            WordsType {
+                letter: 's',
+                amount: 1,
+                count: 0,
+            },
+            WordsType {
+                letter: 'h',
+                amount: 1,
+                count: 0,
+            },
+            WordsType {
+                letter: 'i',
+                amount: 1,
+                count: 0,
+            },
+            WordsType {
+                letter: 'n',
+                amount: 1,
+                count: 0,
+            },
+            WordsType {
+                letter: 'e',
+                amount: 1,
+                count: 0,
+            },
         ];
         assert_eq!(wordle_vec, wordle_vec_expected);
     }
@@ -83,9 +103,21 @@ mod test {
         assert_eq!(duplcated_l.unwrap().amount, 2);
 
         let wordle_vec_expected = [
-            WordsType { letter: 'l', amount: 2, count: 0 },
-            WordsType { letter: 'e', amount: 2, count: 0 },
-            WordsType { letter: 'v', amount: 1, count: 0 },
+            WordsType {
+                letter: 'l',
+                amount: 2,
+                count: 0,
+            },
+            WordsType {
+                letter: 'e',
+                amount: 2,
+                count: 0,
+            },
+            WordsType {
+                letter: 'v',
+                amount: 1,
+                count: 0,
+            },
         ];
         assert_eq!(wordle_vec, wordle_vec_expected);
     }
