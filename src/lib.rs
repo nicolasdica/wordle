@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 
 #[derive(Debug, PartialEq)]
@@ -5,6 +6,47 @@ pub struct WordsType {
     pub letter: char,
     pub amount: i8,
     pub count: i8,
+}
+
+#[derive(Debug, PartialEq, Clone)]
+pub enum LetterStatus {
+    Exact,
+    WrongPos,
+    NotInWord,
+}
+
+pub fn check_guess(guess: &str, word: &str) -> Vec<LetterStatus> {
+    let guess_vec: Vec<char> = guess.chars().collect();
+    let word_vec: Vec<char> = word.chars().collect();
+
+    let mut results = vec![LetterStatus::NotInWord; 5];
+
+    let mut available_letters: HashMap<char, i32> = HashMap::new();
+    for &ch in &word_vec {
+        *available_letters.entry(ch).or_insert(0) += 1;
+    }
+
+    for i in 0..5 {
+        if guess_vec[i] == word_vec[i] {
+            results[i] = LetterStatus::Exact;
+            *available_letters.get_mut(&guess_vec[i]).unwrap() -= 1;
+        }
+    }
+
+    for i in 0..5 {
+        if results[i] == LetterStatus::NotInWord {
+            let letter = guess_vec[i];
+
+            if let Some(&count) = available_letters.get(&letter) {
+                if count > 0 {
+                    results[i] = LetterStatus::WrongPos;
+                    *available_letters.get_mut(&letter).unwrap() -= 1;
+                }
+            }
+        }
+    }
+
+    results
 }
 
 pub fn words_library() -> Vec<String> {
@@ -52,6 +94,18 @@ pub fn validate_guess(guess: &str, words: &[String]) -> Result<(), String> {
 #[cfg(test)]
 mod test {
     use super::*;
+    #[test]
+    fn test_perfect_match() {
+        let result = check_guess("hello", "hello");
+        assert_eq!(result.len(), 5);
+        assert!(result.iter().all(|s| *s == LetterStatus::Exact));
+    }
+
+    #[test]
+    fn test_no_matches() {
+        let result = check_guess("abcde", "fghij");
+        assert!(result.iter().all(|s| *s == LetterStatus::NotInWord));
+    }
 
     #[test]
     fn check_words_amount() {
