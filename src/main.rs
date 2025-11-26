@@ -1,7 +1,7 @@
 use colored::Colorize;
 use rand::Rng;
 use std::io;
-use wordle::{check_guess, validate_guess, words_library, LetterStatus};
+use wordle::{LetterStatus, check_guess, validate_guess, words_library};
 
 fn main() {
     print!("\x1B[2J\x1B[1;1H");
